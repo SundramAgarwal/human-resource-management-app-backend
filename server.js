@@ -25,7 +25,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://human-resource-management.vercel.app",
-    ], //,
+    ],
     credentials: true,
   })
 );
