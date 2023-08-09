@@ -24,7 +24,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "http://human-resource-management-app.vercel.app",
+      "https://human-resource-management-app.vercel.app",
     ],
     credentials: true,
   })
