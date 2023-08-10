@@ -308,7 +308,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
   //   success :true,
   //   message: "Reset Email Sent"
   // }))
-  .then((res) => console.log("message sent")
+  .then((res) => console.log("message sent"))
   .catch((error) => console.log(error.message))
   // .catch((error) => {throw new Error("Email not sent please try again")})
 
