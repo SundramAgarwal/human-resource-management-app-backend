@@ -3,7 +3,7 @@ const Admin = require("../models/adminModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-// const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../utils/sendEmail");
 const sgMail = require("@sendgrid/mail")
 const Token = require("../models/tokenModel");
 
