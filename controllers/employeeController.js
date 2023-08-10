@@ -6,8 +6,12 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
+const sgMail = require("@sendgrid/mail")
+
 const EmployeeToken = require("../models/employeeTokenModel");
 
+
+sgMail.setApiKey(process.env.SENDGRID_API)
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 };
@@ -101,6 +105,20 @@ const createEmployee = asyncHandler(async (req, res) => {
     res.status(500);
     throw new Error("Email not sent please try again");
   }
+  // ((((((((const message = {
+  //   to: email,
+  //   from: process.env.EMAIL_ADMIN2,
+  //   subject: "Password For your registered Account at your abc organization's portal",
+  //   html: `Your account for the HR management system has been created. Your password is ${password}.`,
+  // }
+  // sgMail.send(message)
+  // .then(res.status(200).json({
+  //   success :true,
+  //   message: "Password has been sent to the Employee"
+  // }))
+  // // .then((res) => console.log("message sent"))
+  // .catch((error) => console.log(error.message))
+  // // .catch((error) => {throw new Error("Email not sent please try again")})))))))))
 
   if (employee) {
     const {
@@ -406,6 +424,32 @@ const forgotPassword = asyncHandler(async (req, res) => {
     res.status(500);
     throw new Error("Email not sent please try again");
   }
+
+  // const message = {
+  //   to: employee.email,
+  //   from: process.env.EMAIL_ADMIN2,
+  //   subject: "Password Reset Request",
+  //   html: `
+  //     <h2>Hello ${employee.first_name}</h2>
+  //     <p>Please use the url below to reset your password</p>
+  //     <p>This reset link is only available for 30 minutes.</p>
+  
+  //     <a href = ${resetUrl} clicktracking = off>
+  //     ${resetUrl}</a>
+  
+  //     <p>Regards...</p>
+  //     <p>HRM team</p>
+  //     `,
+  // }
+  // sgMail.send(message)
+  // .then(res.status(200).json({
+  //   success :true,
+  //   message: "Reset Email Sent"
+  // }))
+  // // .then((res) => console.log("message sent"))
+  // .catch((error) => console.log(error.message))
+  // // .catch((error) => {throw new Error("Email not sent please try again")}
+
 });
 
 //reset password for employee

@@ -261,56 +261,56 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
   //reset email
-  // const message = `
-  //   <h2>Hello ${admin.name}</h2>
-  //   <p>Please use the url below to reset your password</p>
-  //   <p>This reset link is only available for 30 minutes.</p>
+  const message = `
+    <h2>Hello ${admin.name}</h2>
+    <p>Please use the url below to reset your password</p>
+    <p>This reset link is only available for 30 minutes.</p>
 
-  //   <a href = ${resetUrl} clicktracking = off>
-  //   ${resetUrl}</a>
+    <a href = ${resetUrl} clicktracking = off>
+    ${resetUrl}</a>
 
-  //   <p>Regards...</p>
-  //   <p>HRM team</p>
-  //   `;
+    <p>Regards...</p>
+    <p>HRM team</p>
+    `;
 
-  // const subject = "Password Reset Request";
-  // const send_to = admin.email;
-  // const sent_from = process.env.EMAIL_ADMIN;
+  const subject = "Password Reset Request";
+  const send_to = admin.email;
+  const sent_from = process.env.EMAIL_ADMIN;
 
-  // try {
-  //   await sendEmail(subject, message, send_to, sent_from);
-  //   res.status(200).json({
-  //     success: true,
-  //     message: "Reset Email Sent",
-  //   });
-  // } catch (error) {
-  //   res.status(500);
-  //   throw new Error("Email not sent please try again");
-  // }
-
-  const message = {
-    to: admin.email,
-    from: process.env.EMAIL_ADMIN2,
-    subject: "Password Reset Request",
-    html: `
-      <h2>Hello ${admin.name}</h2>
-      <p>Please use the url below to reset your password</p>
-      <p>This reset link is only available for 30 minutes.</p>
-  
-      <a href = ${resetUrl} clicktracking = off>
-      ${resetUrl}</a>
-  
-      <p>Regards...</p>
-      <p>HRM team</p>`,
+  try {
+    await sendEmail(subject, message, send_to, sent_from);
+    res.status(200).json({
+      success: true,
+      message: "Reset Email Sent",
+    });
+  } catch (error) {
+    res.status(500);
+    throw new Error("Email not sent please try again");
   }
-  sgMail.send(message)
+
+  // const message = {
+  //   to: admin.email,
+  //   from: process.env.EMAIL_ADMIN2,
+  //   subject: "Password Reset Request",
+  //   html: `
+  //     <h2>Hello ${admin.name}</h2>
+  //     <p>Please use the url below to reset your password</p>
+  //     <p>This reset link is only available for 30 minutes.</p>
+  
+  //     <a href = ${resetUrl} clicktracking = off>
+  //     ${resetUrl}</a>
+  
+  //     <p>Regards...</p>
+  //     <p>HRM team</p>`,
+  // }
+  // sgMail.send(message)
   // .then(res.status(200).json({
   //   success :true,
   //   message: "Reset Email Sent"
   // }))
-  .then((res) => console.log("message sent"))
-  .catch((error) => console.log(error.message))
-  // .catch((error) => {throw new Error("Email not sent please try again")})
+  // // .then((res) => console.log("message sent"))
+  // .catch((error) => console.log(error.message))
+  // // .catch((error) => {throw new Error("Email not sent please try again")})
 
 });
 

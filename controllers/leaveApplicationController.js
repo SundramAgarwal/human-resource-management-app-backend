@@ -2,7 +2,9 @@ const asyncHandler = require("express-async-handler");
 const LeaveApplication = require("../models/leaveApplicationModel");
 const sendEmail = require("../utils/sendEmail");
 const Employee = require("../models/employeeModel");
+const sgMail = require("@sendgrid/mail")
 
+sgMail.setApiKey(process.env.SENDGRID_API)
 //apply for leave
 const createLeave = asyncHandler(async (req, res) => {
   const { startDate, endDate, type, reason } = req.body;
@@ -282,6 +284,24 @@ const updateLeaveApplication = asyncHandler(async (req, res) => {
         res.status(500);
         throw new Error("Email not sent please try again");
       }
+
+
+      // using sendgrid
+      // const employee = await Employee.findById(leaveApplication.employeeId);
+      // const message = {
+      //   to: employee.email,
+      //   from: process.env.EMAIL_ADMIN2,
+      //   subject: "Leave Application Approved",
+      //   html: `Dear ${employee.first_name},\n\nYour leave application from ${leaveApplication.startDate} to ${leaveApplication.endDate} has been approved by your admin.\n\nBest regards,\nThe HR Team`,
+      // }
+      // sgMail.send(message)
+      // .then(res.status(200).json({
+      //   success :true,
+      //   message: "Leave Approval email sent."
+      // }))
+      // // .then((res) => console.log("message sent"))
+      // .catch((error) => console.log(error.message))
+      // // .catch((error) => {throw new Error("Email not sent please try again")})
     }
 
     if (status === "rejected") {
@@ -296,6 +316,23 @@ const updateLeaveApplication = asyncHandler(async (req, res) => {
         res.status(500);
         throw new Error("Email not sent please try again");
       }
+
+      // const employee = await Employee.findById(leaveApplication.employeeId);
+      // const message = {
+      //   to: employee.email,
+      //   from: process.env.EMAIL_ADMIN2,
+      //   subject: "Leave Application Rejected",
+      //   html: `Dear ${employee.first_name},\n\nYour leave application from ${leaveApplication.startDate} to ${leaveApplication.endDate} has been Rejected by your admin.For more information please contact to the HR team of your organization.\n\nBest regards,\nThe HR Team`,
+      // }
+      // sgMail.send(message)
+      // .then(res.status(200).json({
+      //   success :true,
+      //   message: "Leave Rejected email sent."
+      // }))
+      // // .then((res) => console.log("message sent"))
+      // .catch((error) => console.log(error.message))
+      // // .catch((error) => {throw new Error("Email not sent please try again")})
+
     }
 
     res.status(200).json({
